@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Citizen AI Assistant Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Include Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Include DOMPurify for sanitization -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+</head>
+<body>
+
+    <!-- Authentication View -->
+    <div id="auth-container">
+        <div class="auth-card">
+            <div class="branding">
+                <div class="logo-placeholder">🏛️</div>
+                <div class="branding-text">
+                    <h1>CS AI</h1>
+                    <p>Official Citizen AI Assistant</p>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="username">Citizen Name</label>
+                <input type="text" id="username" placeholder="Enter your full name">
+            </div>
+
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="citizen@example.com">
+            </div>
+
+            <button id="send-otp-btn">Send OTP</button>
+
+            <div id="otp-section" class="hidden">
+                <div class="input-group">
+                    <label for="otp">One-Time Password</label>
+                    <input type="text" id="otp" maxlength="8" placeholder="Enter OTP">
+                </div>
+                <button id="verify-btn">Verify & Launch</button>
+            </div>
+
+            <div id="auth-status" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <!-- Chat Dashboard View -->
+    <div id="chat-container" class="hidden">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-placeholder small">🏛️</div>
+                <h2>Citizen AI Hub</h2>
+            </div>
+            
+            <div class="citizen-info">
+                <p>Welcome,</p>
+                <h3 id="display-citizen-name">Citizen</h3>
+            </div>
+            
+            <div class="session-info">
+                <p>Session active and secure</p>
+            </div>
+
+            <button id="logout-btn">Log Out</button>
+        </aside>
+
+        <main class="chat-main">
+            <div id="chat-box" aria-live="polite">
+                <!-- Suggestion Chips (Initially shown) -->
+                <div id="suggestions" class="suggestions-container">
+                    <button class="chip" data-prompt="How do I apply for income certificate?">How do I apply for income certificate?</button>
+                    <button class="chip" data-prompt="Required documents for caste certificate">Required documents for caste certificate</button>
+                    <button class="chip" data-prompt="Track grievance application">Track grievance application</button>
+                    <button class="chip" data-prompt="How to apply for pension scheme?">How to apply for pension scheme?</button>
+                </div>
+            </div>
+
+            <div class="chat-footer">
+                <input type="text" id="user-input" placeholder="Ask your citizen assistant..." aria-label="Chat input">
+                <button id="send-btn">Send</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
