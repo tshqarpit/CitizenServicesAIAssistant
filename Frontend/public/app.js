@@ -1,5 +1,5 @@
 // Configuration
-const BACKEND_API_URL = "http://localhost:5000/api";
+const BACKEND_API_URL = "https://citizenservicesaiassistant.onrender.com/api";
 
 // State
 let sessionToken = localStorage.getItem('citizen_jwt');
@@ -83,7 +83,7 @@ async function requestOTP() {
             setAuthStatus('OTP sent to your email', 'success');
             otpSection.classList.remove('hidden');
             citizenName = username;
-            
+
             // Cooldown simulation
             let cooldown = 30;
             const timer = setInterval(() => {
@@ -163,7 +163,7 @@ function appendMessage(sender, text, save = true) {
 
     const msgDiv = document.createElement('div');
     msgDiv.className = `message ${sender}`;
-    
+
     if (sender === 'ai') {
         const rawHtml = marked.parse(text);
         const safeHtml = DOMPurify.sanitize(rawHtml);
@@ -251,7 +251,7 @@ function setupEventListeners() {
     verifyBtn.addEventListener('click', verifyOTP);
     logoutBtn.addEventListener('click', logOut);
     sendBtn.addEventListener('click', sendMessage);
-    
+
     userInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') sendMessage();
     });
