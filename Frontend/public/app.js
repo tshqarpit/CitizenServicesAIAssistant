@@ -286,7 +286,14 @@ async function sendMessage() {
             alert('Session expired. Please log in again.');
             logOut();
         } else {
-            appendMessage('ai', 'Sorry, an error occurred while processing your request.');
+            let errorMsg = 'Sorry, an error occurred while processing your request.';
+            try {
+                const data = await response.json();
+                if (data.error) errorMsg = data.error;
+            } catch (e) {
+                // Ignore parse errors
+            }
+            appendMessage('ai', errorMsg);
         }
     } catch (error) {
         chatBox.removeChild(indicator);

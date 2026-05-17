@@ -92,6 +92,9 @@ router.post('/', async (req, res) => {
     res.json({ reply: geminiResponse.text });
   } catch (err) {
     console.error('Chat Error:', err);
+    if (err.message && err.message.includes('429')) {
+      return res.status(429).json({ error: 'The AI assistant is currently experiencing high traffic or has reached its quota limit. Please try again in a few moments.' });
+    }
     res.status(500).json({ error: 'Internal server error' });
   }
 });
