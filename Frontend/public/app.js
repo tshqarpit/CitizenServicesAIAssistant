@@ -96,14 +96,6 @@ function showChat() {
     }
     scrollToBottom();
 }
-    authContainer.classList.add('hidden');
-    chatContainer.classList.remove('hidden');
-    displayCitizenName.textContent = citizenName;
-    if (chatHistory.length > 0 && suggestionsContainer) {
-        suggestionsContainer.style.display = 'none';
-    }
-    scrollToBottom();
-}
 
 function setAuthStatus(msg, type = 'info') {
     authStatus.textContent = msg;
@@ -243,12 +235,8 @@ function restoreChatHistory() {
 }
 
 function scrollToBottom() {
-    // Only auto-scroll if near bottom
-    const threshold = 150;
-    const isNearBottom = chatBox.scrollHeight - chatBox.scrollTop - chatBox.clientHeight < threshold;
-    if (isNearBottom || chatBox.children.length <= 2) {
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
+    // Always auto-scroll to the latest message
+    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 async function sendMessage() {
