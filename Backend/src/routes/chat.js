@@ -30,31 +30,31 @@ router.post('/', async (req, res) => {
     .split(/\s+/)
     .filter(word => word.length > 2);
 
-  if (keywords.length === 0) {
-    return res.status(400).json({ error: 'Please provide more details.' });
-  }
-
   try {
-    // Search supersabase for matching services
     let data = [];
-    const orQuery = keywords
-      .map(
-        kw => `keywords.ilike.%${kw}%,service_name.ilike.%${kw}%,full_guide_text.ilike.%${kw}%,eligibility.ilike.%${kw}%,required_documents.ilike.%${kw}%`
-      )
-      .join(',');
-    const { data: searchData, error } = await supabase
-      .from('citizen_services_v1')
-      .select('*')
-      .or(orQuery)
-      .limit(3);
+    
+    // Only search Supabase if we have valid keywords (avoids errors on messages like "hi")
+    if (keywords.length > 0) {
+      const orQuery = keywords
+        .map(
+          kw => `keywords.ilike.%${kw}%,service_name.ilike.%${kw}%,full_guide_text.ilike.%${kw}%,eligibility.ilike.%${kw}%,required_documents.ilike.%${kw}%`
+        )
+        .join(',');
+        
+      const { data: searchData, error } = await supabase
+        .from('citizen_services_v1')
+        .select('*')
+        .or(orQuery)
+        .limit(3);
 
-    if (error) {
-      console.error('Supabase error:', error);
-      throw new Error('Database query failed');
-    }
+      if (error) {
+        console.error('Supabase error:', error);
+        throw new Error('Database query failed');
+      }
 
-    if (searchData && searchData.length > 0) {
-      data = searchData;
+      if (searchData && searchData.length > 0) {
+        data = searchData;
+      }
     }
 
     // Build context for Gemini
@@ -105,10 +105,15 @@ router.get('/suggestions', async (req, res) => {
     const { data: services, error } = await supabase
       .from('citizen_services_v1')
       .select('service_name')
-      .order('random()', { ascending: false })
-      .limit(5);
+      .limit(20);
+      
     if (error) throw error;
-    const suggestions = (services || []).map(s => `How can I ${s.service_name.toLowerCase()}?`);
+    
+    // Shuffle the services in JavaScript to avoid Supabase random() errors
+    const shuffled = (services || []).sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 5);
+    
+    const suggestions = selected.map(s => `How can I apply for ${s.service_name.toLowerCase()}?`);
     res.json({ suggestions });
   } catch (e) {
     console.error('Suggestions error:', e);
