@@ -47,13 +47,17 @@ body {
     margin-bottom: 30px;
 }
 
-.logo-placeholder {
-    font-size: 3rem;
+.up-police-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
     margin-bottom: 10px;
 }
 
-.logo-placeholder.small {
-    font-size: 2rem;
+.up-police-logo.small {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0;
 }
 
 .branding-text h1 {
