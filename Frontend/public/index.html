@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Citizen AI Assistant Portal</title>
+    <title>Citizen Services AI Assistant</title>
     <link rel="stylesheet" href="style.css">
     <!-- Include Marked.js for markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Include DOMPurify for sanitization -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
 </head>
+
 <body>
 
     <!-- Authentication View -->
@@ -19,7 +21,7 @@
                 <img src="logo.svg" alt="UP Police Logo" class="up-police-logo">
                 <div class="branding-text">
                     <h1>UPCOP AI</h1>
-                    <p>Official Citizen AI Assistant</p>
+                    <p>Citizen Services AI Assistant</p>
                 </div>
             </div>
 
@@ -54,12 +56,12 @@
                 <img src="logo.svg" alt="UP Police Logo" class="up-police-logo small">
                 <h2>UPCOP AI Sahayak</h2>
             </div>
-            
+
             <div class="citizen-info">
                 <p>Welcome,</p>
                 <h3 id="display-citizen-name">Citizen</h3>
             </div>
-            
+
             <div class="session-info">
                 <p>Session active and secure</p>
             </div>
@@ -70,7 +72,7 @@
         <main class="chat-main">
             <div id="chat-box" aria-live="polite">
                 <!-- Suggestion Chips (Initially shown) -->
-<div id="suggestions" class="suggestions-container"></div>
+                <div id="suggestions" class="suggestions-container"></div>
             </div>
 
             <div class="chat-footer">
@@ -82,4 +84,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
