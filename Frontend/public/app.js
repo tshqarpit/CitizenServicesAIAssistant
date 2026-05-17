@@ -193,6 +193,17 @@ function logOut() {
     localStorage.removeItem('citizen_name');
     localStorage.removeItem('citizen_chat_history');
     chatBox.innerHTML = '';
+    
+    // Reset auth form
+    usernameInput.value = '';
+    emailInput.value = '';
+    otpInput.value = '';
+    otpSection.classList.add('hidden');
+    sendOtpBtn.disabled = false;
+    sendOtpBtn.textContent = 'Send OTP';
+    authStatus.textContent = '';
+    authStatus.className = '';
+
     if (suggestionsContainer) {
         suggestionsContainer.style.display = 'flex';
         chatBox.appendChild(suggestionsContainer);
