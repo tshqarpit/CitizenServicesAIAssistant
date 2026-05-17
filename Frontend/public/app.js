@@ -42,7 +42,60 @@ function showAuth() {
     chatContainer.classList.add('hidden');
 }
 
+function fetchSuggestions() {
+  // Only fetch when user is authenticated
+  if (!sessionToken) return;
+  // Show loading indicator
+  suggestionsContainer.innerHTML = '<span class="loading">Loading suggestions...</span>';
+  fetch(`${BACKEND_API_URL}/chat/suggestions`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${sessionToken}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      // Clear loading
+      suggestionsContainer.innerHTML = '';
+      const suggestions = data.suggestions || [];
+      suggestions.forEach(prompt => {
+        const chip = document.createElement('button');
+        chip.className = 'chip';
+        chip.dataset.prompt = prompt;
+        chip.textContent = prompt;
+        chip.addEventListener('click', () => {
+          userInput.value = prompt;
+          sendMessage();
+        });
+        suggestionsContainer.appendChild(chip);
+      });
+      // If no suggestions, hide container
+      if (suggestions.length === 0) {
+        suggestionsContainer.style.display = 'none';
+      } else {
+        suggestionsContainer.style.display = 'flex';
+      }
+    })
+    .catch(err => {
+      console.error('Failed to fetch suggestions', err);
+      suggestionsContainer.innerHTML = '';
+    });
+}
+
+// Call fetchSuggestions when showing chat for the first time
 function showChat() {
+    authContainer.classList.add('hidden');
+    chatContainer.classList.remove('hidden');
+    displayCitizenName.textContent = citizenName;
+    if (chatHistory.length > 0 && suggestionsContainer) {
+        suggestionsContainer.style.display = 'none';
+    } else if (suggestionsContainer) {
+        // Load dynamic suggestions
+        fetchSuggestions();
+    }
+    scrollToBottom();
+}
     authContainer.classList.add('hidden');
     chatContainer.classList.remove('hidden');
     displayCitizenName.textContent = citizenName;
