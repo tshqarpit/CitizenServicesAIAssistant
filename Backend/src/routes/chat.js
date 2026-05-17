@@ -6,7 +6,7 @@ const ai = require('../config/gemini');
 
 router.use(authenticateToken);
 
-router.post('/', async (req, res) => {
+
   let { message } = req.body;
 
   if (!message || typeof message !== 'string') {
